@@ -1,29 +1,29 @@
-const { compile } = require("./compile/compile");
-const express = require("express");
-const cors = require("cors");
-const app = express();
+const { compile } = require("./compile/compile")
+const express = require("express")
+const cors = require("cors")
+const app = express()
 
-app.use(express.json());
+app.use(express.json())
 
-app.use(cors());
+app.use(cors())
 
 /************** compilation  **************/
 app.post("/compile", async (req, res) => {
   try {
-    let r = await compile(req.body.code);
-    res.send(r);
+    let r = await compile(req.body.code)
+    res.send(r)
   } catch (err) {
-    res.send(err);
+    res.send(err)
   }
-});
+})
 
 /************** authentication *************/
-const authentication = require("./authentication/authentication");
-app.use("/authentication", authentication);
-const files = require("./getInfo/files");
-app.use("/files", files);
+const auth = require("./authentication")
+app.use("/Auth", auth)
+const files = require("./getInfo/files")
+app.use("/files", files)
 
-const profile = require("./getInfo/user");
-app.use("/profile", profile);
+const profile = require("./getInfo/user")
+app.use("/profile", profile)
 
-app.listen(5000);
+app.listen(5000)

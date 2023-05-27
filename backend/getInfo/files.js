@@ -8,7 +8,7 @@ const pool = new Pool({
     user: "postgres",
     host: "localhost",
     database: "IDE",
-    password: "pfeTeam",
+    password: " ",
     port: 5432,
   });
   router.use(express.json());
