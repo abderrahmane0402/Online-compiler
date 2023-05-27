@@ -12,11 +12,7 @@ const App = () => {
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/profile" element={<ProfileModal />} />
       <Route path="/Partage" element={<Partage />} />
-      
-      
-
       {/* <Route path="/files" element={<NavField />} /> */}
-
     </Routes>
   );
 };
