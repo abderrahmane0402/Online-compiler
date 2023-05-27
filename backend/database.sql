@@ -1,3 +1,6 @@
+-- database name : IDE
+-- password : pfeTeam
+
 create table file(
     file_id serial primary key,
     email varchar(255),
