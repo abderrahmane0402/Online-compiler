@@ -103,15 +103,12 @@ const NavField = () => {
                 <EditOutlined className="mr-2" />
                 
               </button>
-              <button
-                className="flex items-center"
-                onClick={() => {
-                  const newFilename = prompt("renommage filename:", file.filename);
-                  if (newFilename) handleUpdate(file.file_id, newFilename);
-                }}
-              >
-                <EditOutlined className="mr-2" />
-                
+              <button className="flex items-center"  onClick={() => {
+                if (window.confirm('Êtes-vous sûr de vouloir supprimer ce file ?')) {
+                  handleDelete(file.file_id);
+                }
+              }}>
+                <DeleteOutlined className="mr-2" />
               </button>
             </div>
           </div>
