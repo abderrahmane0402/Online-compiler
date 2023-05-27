@@ -1,5 +1,5 @@
 -- database name : IDE
--- password : pfeTeam
+-- password :  
 
 create table file(
     file_id serial primary key,
@@ -11,5 +11,5 @@ create table users(
     username char(255),
     email varchar(255) PRIMARY KEY,
     password varchar(255)
-)
-alter table file add CONSTRAINT FOREIGN KEY email REFERENCES users(email)
+);
+alter table file add CONSTRAINT fk FOREIGN KEY (email) REFERENCES users(email)
