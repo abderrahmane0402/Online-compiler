@@ -33,11 +33,14 @@ const ProfilePage = () => {
   const updateProfile = () => {
     const updatedUser = { email, username, password };
     axios.put("http://localhost:5000/profile/update", updatedUser)
-      .then((response) => {
-        // Handle successful update
-        console.log("Profile updated successfully");
-        alert("Profile updated successfully"); // Display success alert
-      })
+     .then((response) => {
+      // Handle successful update
+      console.log("Profile updated successfully");
+      
+      if (confirm("Profile updated successfully. Do you want to redirect to IDE?")) {
+        window.location.href = "http://localhost:5173/ide"; // Redirect to the specified link
+      }
+     })    
       .catch((error) => {
         // Handle error
         console.error("Error updating profile", error);
