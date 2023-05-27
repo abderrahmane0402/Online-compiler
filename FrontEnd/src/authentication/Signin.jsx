@@ -33,19 +33,19 @@ const Signin = () => {
       return
     }
     try {
-      console.log("start check")
       const response = await axios.post(
         "http://localhost:5000/Auth/signin",
         formData
       )
       if (response.data == "ok") {
+        console.log("session")
+        sessionStorage.setItem("email", formData.email)
         router("/ide")
       }
       setLoading(false)
-      console.log("check good")
     } catch (error) {
       console.log(error)
-      if (error.response?.status == 500) {
+      if (error.response?.status == 500 || error?.code == "ERR_NETWORK") {
         setToast((draft) => {
           draft.open = true
           draft.message = "serveur inaccessible lancer le serveur"
@@ -149,6 +149,7 @@ const Signin = () => {
         open={toast.open}
         message={toast.message}
         autoHideDuration={3000}
+        onClose={handleClose}
       >
         <Alert
           onClose={handleClose}

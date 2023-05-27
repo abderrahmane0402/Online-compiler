@@ -202,6 +202,7 @@ const Signup = () => {
         open={toast.open}
         message={toast.message}
         autoHideDuration={3000}
+        onClose={handleClose}
       >
         <Alert
           onClose={handleClose}
