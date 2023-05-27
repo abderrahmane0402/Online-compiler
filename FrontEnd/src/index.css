@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+.about-color {
+  background-color: #33363a !important;
+}
+.about-color:hover {
+  background-color: rgba(61, 65, 69, 0.37) !important;
+}
