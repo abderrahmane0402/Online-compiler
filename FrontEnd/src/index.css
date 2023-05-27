@@ -11,3 +11,6 @@
 .about-color:hover {
   background-color: rgba(61, 65, 69, 0.37) !important;
 }
+.white {
+  color: white !important;
+}
