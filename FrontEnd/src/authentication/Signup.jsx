@@ -28,6 +28,8 @@ const Signup = () => {
     if (
       formData.user == "" ||
       formData.email == "" ||
+      formData.email.indexOf("@") == -1 ||
+      formData.email.indexOf(".") == -1 ||
       formData.password == "" ||
       formData.confirmPassword == ""
     ) {
@@ -122,7 +124,14 @@ const Signup = () => {
                   draft.email = e.target.value
                 })
               }}
-              error={!submit ? false : formData.email.length == 0 && true}
+              error={
+                !submit
+                  ? false
+                  : (formData.email.length == 0 ||
+                      formData.email.indexOf("@") == -1 ||
+                      formData.email.indexOf(".") == -1) &&
+                    true
+              }
             />
             <Input
               helperText='enter un mot de pass'

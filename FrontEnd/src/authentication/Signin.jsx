@@ -23,7 +23,12 @@ const Signin = () => {
   // Sign in Submit funtion
   async function SignIn() {
     setLoading(true)
-    if (formData.email == "" || formData.password == "") {
+    if (
+      formData.email == "" ||
+      formData.email.indexOf("@") == -1 ||
+      formData.email.indexOf(".") == -1 ||
+      formData.password == ""
+    ) {
       setLoading(false)
       return
     }
@@ -93,7 +98,14 @@ const Signin = () => {
                   draft.email = e.target.value
                 })
               }}
-              error={!submit ? false : formData.email.length == 0 && true}
+              error={
+                !submit
+                  ? false
+                  : (formData.email.length == 0 ||
+                      formData.email.indexOf("@") == -1 ||
+                      formData.email.indexOf(".") == -1) &&
+                    true
+              }
             />
             <Input
               helperText='enter un mot de pass'
