@@ -3,8 +3,8 @@ import axios from "axios"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useImmer } from "use-immer"
-import Layout from "./layout/layout"
-import Input from "./components/Input"
+import Layout from "./layout"
+import Input from "../components/Input"
 import LoadingButton from "./components/LoadingButton"
 
 const Signup = () => {

@@ -1,6 +1,6 @@
 import Body from "../components/Body"
-import Header from "../components/Header"
-import Page from "../components/Page"
+import Header from "./components/Header"
+import Page from "./components/Page"
 
 const Layout = ({ children }) => {
   return (

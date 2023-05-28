@@ -1,5 +1,5 @@
 import { Button, Typography } from "@mui/material"
-import Layout from "./layout/layout"
+import Layout from "./layout"
 import { Link } from "react-router-dom"
 
 export default function Essay() {
@@ -21,7 +21,7 @@ export default function Essay() {
           utiliser
         </Typography>
         <div className='mt-8 flex gap-6'>
-          <Link>
+          <Link to={"/ide"}>
             <Button
               variant='contained'
               size='large'
@@ -33,6 +33,9 @@ export default function Essay() {
                 letterSpacing: "1px",
                 fontFamily: "'Inter', sans-serif",
               }}
+              onClick={() => {
+                sessionStorage.setItem("email", "essay")
+              }}
             >
               Essayer editeur
             </Button>
@@ -43,7 +46,6 @@ export default function Essay() {
             className='about-color'
             sx={{
               textTransform: "none",
-              backgroundColor: "#5c5cfe",
               fontWeight: "400",
               fontSize: 16,
               letterSpacing: "1px",
