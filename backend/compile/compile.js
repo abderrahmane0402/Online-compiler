@@ -1,29 +1,41 @@
-const fs = require("fs");
+const { spawn } = require("child_process")
+const fs = require("fs")
 
 async function compile(code) {
-  let result = null;
+  let result = null
   result = await new Promise((resolve, reject) => {
-    fs.writeFile("program.c", code, (err) => {
-      if (err) reject(err);
+    fs.writeFile("./compile/program.c", code, (err) => {
+      if (err) reject(err)
+      let res = "",
+        error = ""
 
-      const gcc = spawn("gcc", ["program.c", "-o", "program"]);
+      const gcc = spawn("gcc", [
+        "./compile/program.c",
+        "-o",
+        "./compile/program",
+      ])
       gcc.stderr.on("data", (data) => {
-        console.error(data.toString());
-        reject(data.toString());
-      });
+        error += data.toString()
+      })
 
       gcc.on("close", () => {
-        const program = spawn("./program");
-        let finalData = "";
+        if (error != "") reject(error)
+        console.log(123)
+        const program = spawn("./compile/program")
         program.stdout.on("data", (data) => {
-          finalData += data.toString();
-          resolve(finalData);
-        });
-      });
-    });
-  });
-  return result;
+          console.log(data)
+          res += data.toString()
+        })
+
+        program.on("close", () => {
+          // console.log(res)
+          resolve(res)
+        })
+      })
+    })
+  })
+  return result
 }
 module.exports = {
   compile,
-};
+}

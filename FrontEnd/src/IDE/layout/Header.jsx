@@ -1,15 +1,6 @@
 import React from "react"
 import ShortUser from "../components/ShortUser"
-// const CompileCode = (code) => {
-//   Axios.post("http://localhost:3500/", { code })
-//     .then((response) => {
-//       console.log(response);
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     })
-//   console.log("click");
-// };
+
 const Header = () => {
   return (
     <header className='flex min-h-[80px] w-full items-center justify-between pr-6'>

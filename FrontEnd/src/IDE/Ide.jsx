@@ -7,30 +7,17 @@ import Main from "./layout/main"
 import { useNavigate } from "react-router-dom"
 import Editor from "./layout/Editor"
 import Terminal from "./layout/Terminal"
+import io from "socket.io-client"
+
 export default function Ide() {
   const router = useNavigate()
   const [user, setUser] = useState(null)
+  let socket = null
   useEffect(() => {
     setUser(sessionStorage.getItem("email"))
-    if (!sessionStorage.getItem("email")) router("/")
+    if (!sessionStorage.getItem("email")) router("/", { replace: true })
   }, [])
   return (
-    //  <Body>
-    //    <Header code={code}>
-    //      <ShortUser />
-    //    </Header>
-    //    <TextEditor>
-    //      <Nav>
-    //        <Searchbox />
-    //        <NavField />
-    //        {/* <Tools /> */}
-    //      </Nav>
-    //      <Editor>
-    //       <Ss code={code} setcode={setcode}/>
-    //      </Editor>
-    //      <Terminal />
-    //    </TextEditor>
-    //  </Body>
     <Layout>
       <Header />
       <Main>

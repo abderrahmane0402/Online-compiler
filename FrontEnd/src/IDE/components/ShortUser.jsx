@@ -10,6 +10,7 @@ import {
   MenuItem,
   styled,
 } from "@mui/material"
+import { useNavigate } from "react-router-dom"
 
 const MenuItemStyled = styled(MenuItem)({
   "&:hover": {
@@ -21,6 +22,7 @@ const MenuItemStyled = styled(MenuItem)({
 function ShortUser() {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
+  const router = useNavigate()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -128,17 +130,27 @@ function ShortUser() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItemStyled onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItemStyled>
-        <Divider />{" "}
+        {sessionStorage.getItem("email") != "essay" && (
+          <>
+            <MenuItemStyled onClick={handleClose}>
+              <Avatar /> Profile
+            </MenuItemStyled>
+            <Divider />
+          </>
+        )}
         <MenuItemStyled onClick={handleClose}>
           <ListItemIcon>
             <Settings fontSize='small' sx={{ color: "white" }} />
           </ListItemIcon>
           Settings
         </MenuItemStyled>
-        <MenuItemStyled onClick={handleClose}>
+        <MenuItemStyled
+          onClick={() => {
+            sessionStorage.clear()
+            router("/" , {replace:true})
+            handleClose()
+          }}
+        >
           <ListItemIcon>
             <Logout fontSize='small' sx={{ color: "white" }} />
           </ListItemIcon>

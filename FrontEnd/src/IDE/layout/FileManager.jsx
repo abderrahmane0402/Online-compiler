@@ -124,6 +124,8 @@ const FileManager = () => {
     fetchFiles()
   }, [])
 
+  
+
   return (
     <>
       <nav className='h-full min-w-[224px] flex-col items-center gap-2 px-1'>

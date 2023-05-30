@@ -6,7 +6,7 @@ import Partage from "./Partage/Partage"
 import Essay from "./authentication/Essay"
 import Signup from "./authentication/Signup"
 import Signin from "./authentication/Signin"
-import { createContext, useContext, useEffect } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { useImmer } from "use-immer"
 
 export const fileInfo = createContext()
@@ -15,18 +15,20 @@ const App = () => {
   const [file, setFile] = useImmer({
     name: "",
     content: "",
+    result: "",
   })
+  let socket = null;
+
   useEffect(() => {
-    console.log(file)
-  }, [file])
+    console.log("connect")
+  }, [socket])
   return (
-    <fileInfo.Provider value={{ file, setFile }}>
+    <fileInfo.Provider value={{ file, setFile, socket }}>
       <Routes>
         {/* Authentication page */}
         <Route path='/' element={<Essay />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/signin' element={<Signin />} />
-
         {/* main page */}
         <Route path='/ide' element={<Ide />} />
         <Route path='/profile' element={<ProfilePage />} />

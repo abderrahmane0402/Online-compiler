@@ -18,10 +18,11 @@ import {
   Typography,
   styled,
 } from "@mui/material"
+import axios from "axios"
 import { useContext, useEffect, useState } from "react"
+import { io } from "socket.io-client"
 import { useImmer } from "use-immer"
 import { fileInfo } from "../../App"
-import axios from "axios"
 const Input = styled(TextField)({
   "& .MuiInputBase-root": {
     color: "white",
@@ -65,7 +66,7 @@ const style = {
 
 const File = ({ f, fetchFiles }) => {
   const [fileName, setFileName] = useState("")
-  const { file, setFile } = useContext(fileInfo)
+  let { file, setFile, socket } = useContext(fileInfo)
   const [anchorEl, setAnchorEl] = useState(null)
   const [toast, setToast] = useImmer({
     open: false,
@@ -144,6 +145,14 @@ const File = ({ f, fetchFiles }) => {
       })
       handleCloseModal()
     }
+  }
+
+  // create a group connection for code Sharing
+  async function group() {
+    socket = await io("http://localhost:5000", {
+      auth: { email: sessionStorage.getItem("email") },
+    })
+    socket.emit("create-group", "nouveauGroup1")
   }
 
   return (
@@ -251,7 +260,12 @@ const File = ({ f, fetchFiles }) => {
             </ListItemIcon>
             Modifier
           </MenuItemStyled>
-          <MenuItemStyled onClick={handleClose}>
+          <MenuItemStyled
+            onClick={() => {
+              group()
+              handleClose()
+            }}
+          >
             <ListItemIcon>
               <ScreenShareOutlined fontSize='small' sx={{ color: "white" }} />
             </ListItemIcon>

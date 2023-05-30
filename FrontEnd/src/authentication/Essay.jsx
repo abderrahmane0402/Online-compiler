@@ -21,7 +21,7 @@ export default function Essay() {
           utiliser
         </Typography>
         <div className='mt-8 flex gap-6'>
-          <Link to={"/ide"}>
+          <Link to={"/ide"} replace>
             <Button
               variant='contained'
               size='large'

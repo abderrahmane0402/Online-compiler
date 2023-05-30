@@ -40,7 +40,7 @@ const Signin = () => {
       if (response.data == "ok") {
         console.log("session")
         sessionStorage.setItem("email", formData.email)
-        router("/ide")
+        router("/ide", { replace: true })
       }
       setLoading(false)
     } catch (error) {
@@ -91,7 +91,6 @@ const Signin = () => {
               variant='outlined'
               type='email'
               fullWidth
-              autoComplete='none'
               value={formData.email}
               onChange={(e) => {
                 setFormData((draft) => {
