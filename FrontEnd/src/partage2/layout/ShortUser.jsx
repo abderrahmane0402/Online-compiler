@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useState } from "react"
 
-import { BroadcastOnHome, Logout, Settings } from "@mui/icons-material"
+import {
+  BroadcastOnHome,
+  Logout,
+  MeetingRoomOutlined,
+  Settings,
+} from "@mui/icons-material"
 import {
   Avatar,
   Divider,
@@ -25,7 +30,7 @@ function ShortUser() {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const router = useNavigate()
-  let { setSocket } = useContext(fileInfo)
+  let { socket, setSocket, setFile } = useContext(fileInfo)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -36,15 +41,22 @@ function ShortUser() {
   const [email, setEmail] = useState("")
   useEffect(() => {
     setEmail(sessionStorage.getItem("email"))
+    socket?.on("remove-group", () => {
+      Disconnect()
+    })
   }, [])
 
-  const joinGroup = () => {
-    setSocket(
-      io("http://localhost:5000", {
-        auth: { email: sessionStorage.getItem("email") },
-      })
-    )
-    router("/partage2")
+  const Disconnect = () => {
+    handleClose()
+    setFile((draft) => {
+      draft.name = ""
+      draft.content = ""
+      draft.result = ""
+    })
+    socket.emit("leave-group")
+    socket.disconnect()
+    setSocket(null)
+    router("/ide", { replace: true })
   }
   return (
     <>
@@ -91,42 +103,11 @@ function ShortUser() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {sessionStorage.getItem("email") != "essay" && (
-          <>
-            <MenuItemStyled onClick={handleClose}>
-              <Avatar /> Profile
-            </MenuItemStyled>
-            <MenuItemStyled
-              onClick={() => {
-                joinGroup()
-                handleClose()
-              }}
-            >
-              <ListItemIcon>
-                <BroadcastOnHome fontSize='small' sx={{ color: "white" }} />
-              </ListItemIcon>
-              Partage
-            </MenuItemStyled>
-            <Divider />
-          </>
-        )}
-        <MenuItemStyled onClick={handleClose}>
+        <MenuItemStyled onClick={Disconnect}>
           <ListItemIcon>
-            <Settings fontSize='small' sx={{ color: "white" }} />
+            <MeetingRoomOutlined fontSize='small' sx={{ color: "white" }} />
           </ListItemIcon>
-          Settings
-        </MenuItemStyled>
-        <MenuItemStyled
-          onClick={() => {
-            sessionStorage.clear()
-            router("/", { replace: true })
-            handleClose()
-          }}
-        >
-          <ListItemIcon>
-            <Logout fontSize='small' sx={{ color: "white" }} />
-          </ListItemIcon>
-          Logout
+          Disconnect
         </MenuItemStyled>
       </Menu>
     </>

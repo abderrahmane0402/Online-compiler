@@ -10,8 +10,16 @@ import { useContext } from "react"
 import { fileInfo } from "../../App"
 
 const Editor = ({}) => {
-  const { file, setFile } = useContext(fileInfo)
+  const { file, setFile, socket } = useContext(fileInfo)
   const handleChange = (value, event) => {
+    if (socket) {
+      socket.emit("UpdateCode", {
+        name: file.name,
+        content: value,
+        result: file.result,
+      })
+      console.log("modifier")
+    }
     setFile((draft) => {
       draft.content = value
     })

@@ -2,12 +2,13 @@ import { Route, Routes } from "react-router-dom"
 import Ide from "./IDE/Ide"
 import ProfileModal from "./IDE/components/ProfileModal"
 import ProfilePage from "./IDE/components/ProfilePage"
-import Partage from "./Partage/Partage"
 import Essay from "./authentication/Essay"
 import Signup from "./authentication/Signup"
 import Signin from "./authentication/Signin"
 import { createContext, useContext, useEffect, useState } from "react"
 import { useImmer } from "use-immer"
+import Partage from "./partage1/partage"
+import Partage2 from "./partage2/partage2"
 
 export const fileInfo = createContext()
 
@@ -17,13 +18,10 @@ const App = () => {
     content: "",
     result: "",
   })
-  let socket = null;
+  const [socket, setSocket] = useState(null)
 
-  useEffect(() => {
-    console.log("connect")
-  }, [socket])
   return (
-    <fileInfo.Provider value={{ file, setFile, socket }}>
+    <fileInfo.Provider value={{ file, setFile, socket, setSocket }}>
       <Routes>
         {/* Authentication page */}
         <Route path='/' element={<Essay />} />
@@ -34,7 +32,8 @@ const App = () => {
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/profile' element={<ProfileModal />} />
         {/* code share page */}
-        <Route path='/Partage' element={<Partage />} />
+        <Route path='/partage' element={<Partage />} />
+        <Route path='/partage2' element={<Partage2 />} />
       </Routes>
     </fileInfo.Provider>
   )

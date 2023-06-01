@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react"
 
-import { BroadcastOnHome, Logout, Settings } from "@mui/icons-material"
+import { MeetingRoomOutlined, VpnKey } from "@mui/icons-material"
 import {
   Avatar,
-  Divider,
   IconButton,
   ListItemIcon,
   Menu,
@@ -12,7 +11,7 @@ import {
 } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { fileInfo } from "../../App"
-import { io } from "socket.io-client"
+import OtherUser from "./otherUser"
 
 const MenuItemStyled = styled(MenuItem)({
   "&:hover": {
@@ -25,7 +24,9 @@ function ShortUser() {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const router = useNavigate()
-  let { setSocket } = useContext(fileInfo)
+  let { file, socket, setSocket } = useContext(fileInfo)
+  const [users, setUsers] = useState(new Map())
+  const [code, setCode] = useState(null)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -36,16 +37,36 @@ function ShortUser() {
   const [email, setEmail] = useState("")
   useEffect(() => {
     setEmail(sessionStorage.getItem("email"))
+
+    socket.on("user-disconnect", (user) => {
+      setUsers((prevUsers) => {
+        const clone = new Map(prevUsers)
+        clone.delete(user)
+        setUsers(clone)
+      })
+    })
+
+    socket.on("joined", (email, id) => {
+      setUsers((prevUsers) => {
+        const clone = new Map(prevUsers)
+        clone.set(id, email)
+        return clone
+      })
+      socket.emit("send-file", file, id)
+    })
+
+    socket.on("new-group", (code) => {
+      setCode(code)
+    })
   }, [])
 
-  const joinGroup = () => {
-    setSocket(
-      io("http://localhost:5000", {
-        auth: { email: sessionStorage.getItem("email") },
-      })
-    )
-    router("/partage2")
+  const Disconnect = () => {
+    socket.emit("admin-disconnect")
+    socket.disconnect()
+    setSocket(null)
+    router("/ide", { replace: true })
   }
+
   return (
     <>
       <IconButton onClick={handleClick} id='account-menu'>
@@ -53,6 +74,11 @@ function ShortUser() {
           {email.charAt(0).toUpperCase()}
         </Avatar>
       </IconButton>
+      {users &&
+        Array.from(users, ([key, value]) => {
+          return <OtherUser key={key} user={{ email: value, id: key }} />
+        })}
+
       <Menu
         anchorEl={anchorEl}
         id='account-menu'
@@ -91,42 +117,17 @@ function ShortUser() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {sessionStorage.getItem("email") != "essay" && (
-          <>
-            <MenuItemStyled onClick={handleClose}>
-              <Avatar /> Profile
-            </MenuItemStyled>
-            <MenuItemStyled
-              onClick={() => {
-                joinGroup()
-                handleClose()
-              }}
-            >
-              <ListItemIcon>
-                <BroadcastOnHome fontSize='small' sx={{ color: "white" }} />
-              </ListItemIcon>
-              Partage
-            </MenuItemStyled>
-            <Divider />
-          </>
-        )}
-        <MenuItemStyled onClick={handleClose}>
+        <MenuItemStyled onClick={Disconnect}>
           <ListItemIcon>
-            <Settings fontSize='small' sx={{ color: "white" }} />
+            <MeetingRoomOutlined fontSize='small' sx={{ color: "white" }} />
           </ListItemIcon>
-          Settings
+          Disconnect
         </MenuItemStyled>
-        <MenuItemStyled
-          onClick={() => {
-            sessionStorage.clear()
-            router("/", { replace: true })
-            handleClose()
-          }}
-        >
+        <MenuItemStyled>
           <ListItemIcon>
-            <Logout fontSize='small' sx={{ color: "white" }} />
+            <VpnKey fontSize='small' sx={{ color: "white" }} />
           </ListItemIcon>
-          Logout
+          {code}
         </MenuItemStyled>
       </Menu>
     </>

@@ -23,6 +23,7 @@ import { useContext, useEffect, useState } from "react"
 import { io } from "socket.io-client"
 import { useImmer } from "use-immer"
 import { fileInfo } from "../../App"
+import { useNavigate } from "react-router-dom"
 const Input = styled(TextField)({
   "& .MuiInputBase-root": {
     color: "white",
@@ -65,8 +66,9 @@ const style = {
 }
 
 const File = ({ f, fetchFiles }) => {
+  const router = useNavigate()
   const [fileName, setFileName] = useState("")
-  let { file, setFile, socket } = useContext(fileInfo)
+  let { file, setFile, socket, setSocket } = useContext(fileInfo)
   const [anchorEl, setAnchorEl] = useState(null)
   const [toast, setToast] = useImmer({
     open: false,
@@ -148,12 +150,24 @@ const File = ({ f, fetchFiles }) => {
   }
 
   // create a group connection for code Sharing
-  async function group() {
-    socket = await io("http://localhost:5000", {
+  function group() {
+    const ss = io("http://localhost:5000", {
       auth: { email: sessionStorage.getItem("email") },
     })
-    socket.emit("create-group", "nouveauGroup1")
+    setSocket(ss)
+    setFile((draft) => {
+      draft.name = f.filename
+      draft.content = f.content
+    })
+    console.log("create group")
+    ss.emit("create-group")
+    router("/partage")
   }
+
+  useEffect(() => {
+    if (socket) {
+    }
+  }, [socket])
 
   return (
     <>

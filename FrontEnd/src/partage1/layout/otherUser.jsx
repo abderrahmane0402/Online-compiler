@@ -1,18 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
-
-import { BroadcastOnHome, Logout, Settings } from "@mui/icons-material"
+import { fileInfo } from "../../App"
 import {
   Avatar,
-  Divider,
   IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
   styled,
 } from "@mui/material"
-import { useNavigate } from "react-router-dom"
-import { fileInfo } from "../../App"
-import { io } from "socket.io-client"
+import { MeetingRoomOutlined } from "@mui/icons-material"
 
 const MenuItemStyled = styled(MenuItem)({
   "&:hover": {
@@ -21,36 +17,25 @@ const MenuItemStyled = styled(MenuItem)({
   },
 })
 
-function ShortUser() {
+const OtherUser = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-  const router = useNavigate()
-  let { setSocket } = useContext(fileInfo)
-
+  let { socket } = useContext(fileInfo)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const [email, setEmail] = useState("")
-  useEffect(() => {
-    setEmail(sessionStorage.getItem("email"))
-  }, [])
 
-  const joinGroup = () => {
-    setSocket(
-      io("http://localhost:5000", {
-        auth: { email: sessionStorage.getItem("email") },
-      })
-    )
-    router("/partage2")
+  const Disconnect = () => {
+    socket.emit("remove-user", user.id)
   }
   return (
     <>
       <IconButton onClick={handleClick} id='account-menu'>
         <Avatar sx={{ width: 32, height: 32, backgroundColor: "#3343e7" }}>
-          {email.charAt(0).toUpperCase()}
+          {user.email.charAt(0).toUpperCase()}
         </Avatar>
       </IconButton>
       <Menu
@@ -91,46 +76,15 @@ function ShortUser() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {sessionStorage.getItem("email") != "essay" && (
-          <>
-            <MenuItemStyled onClick={handleClose}>
-              <Avatar /> Profile
-            </MenuItemStyled>
-            <MenuItemStyled
-              onClick={() => {
-                joinGroup()
-                handleClose()
-              }}
-            >
-              <ListItemIcon>
-                <BroadcastOnHome fontSize='small' sx={{ color: "white" }} />
-              </ListItemIcon>
-              Partage
-            </MenuItemStyled>
-            <Divider />
-          </>
-        )}
-        <MenuItemStyled onClick={handleClose}>
+        <MenuItemStyled onClick={Disconnect}>
           <ListItemIcon>
-            <Settings fontSize='small' sx={{ color: "white" }} />
+            <MeetingRoomOutlined fontSize='small' sx={{ color: "white" }} />
           </ListItemIcon>
-          Settings
-        </MenuItemStyled>
-        <MenuItemStyled
-          onClick={() => {
-            sessionStorage.clear()
-            router("/", { replace: true })
-            handleClose()
-          }}
-        >
-          <ListItemIcon>
-            <Logout fontSize='small' sx={{ color: "white" }} />
-          </ListItemIcon>
-          Logout
+          Disconnect
         </MenuItemStyled>
       </Menu>
     </>
   )
 }
 
-export default ShortUser
+export default OtherUser
