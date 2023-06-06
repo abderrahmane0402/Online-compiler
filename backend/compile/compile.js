@@ -28,7 +28,6 @@ async function compile(code) {
         })
 
         program.on("close", () => {
-          // console.log(res)
           resolve(res)
         })
       })

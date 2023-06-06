@@ -102,14 +102,14 @@ export default function Partage2() {
             component='h2'
             gutterBottom
           >
-            Créer un fichier
+            Code d'acces au group
           </Typography>
           <Input
-            label='Nom du fichier'
-            helperText='enter un Nom pour le fichier'
+            label='Code de group'
+            helperText="enter un le Code d'acces"
             variant='outlined'
             fullWidth
-            autoComplete="none"
+            autoComplete='none'
             sx={{ marginY: "20px" }}
             value={group}
             onChange={(e) => setGroup(e.target.value)}
