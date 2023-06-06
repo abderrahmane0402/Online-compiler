@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom"
 import Editor from "./layout/Editor"
 import Terminal from "./layout/Terminal"
 import io from "socket.io-client"
+import Input from "../components/Input"
+import Inputs from "./layout/inputs"
 
 export default function Ide() {
   const router = useNavigate()
   const [user, setUser] = useState(null)
-  let socket = null
   useEffect(() => {
     setUser(sessionStorage.getItem("email"))
     if (!sessionStorage.getItem("email")) router("/", { replace: true })
@@ -23,7 +24,10 @@ export default function Ide() {
       <Main>
         {user != "essay" && <FileManager />}
         <Editor />
-        <Terminal />
+        <div className='h-full flex flex-col gap-4'>
+          <Terminal />
+          <Inputs />
+        </div>
       </Main>
     </Layout>
   )

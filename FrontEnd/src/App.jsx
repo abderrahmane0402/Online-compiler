@@ -17,6 +17,7 @@ const App = () => {
     name: "",
     content: "",
     result: "",
+    input: "",
   })
   const [socket, setSocket] = useState(null)
 

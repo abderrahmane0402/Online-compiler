@@ -16,7 +16,7 @@ app.use(cors())
 /************** compilation  **************/
 app.post("/compile", async (req, res) => {
   try {
-    let r = await compile(req.body.code)
+    let r = await compile(req.body.code, req.body.input)
     res.send(r)
   } catch (err) {
     console.log(err)
@@ -56,7 +56,7 @@ io.on("connection", (socket) => {
 
   socket.on("join-Group", (Group) => {
     if (socket.adapter.rooms.has(Group)) {
-      console.log('good')
+      console.log("good")
       Pgroup = Group
       socket.join(Group)
       socket.broadcast

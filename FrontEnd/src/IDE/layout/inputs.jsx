@@ -1,13 +1,18 @@
-import React, { useContext, useState } from "react"
 import MonacoEditor from "@monaco-editor/react"
+import { useContext } from "react"
 import { fileInfo } from "../../App"
 
-const Terminal = () => {
+const Inputs = () => {
   const { file, setFile } = useContext(fileInfo)
+  const handleChange = (value, event) => {
+    setFile((draft) => {
+      draft.input = value
+    })
+  }
   return (
     <div className=' h-full min-w-[400px] bg-[#202327] outline outline-1 outline-[#363e55] flex flex-col ml-3 mr-2'>
       <header className='w-full min-h-[30px] border-b border-[#363e55] flex items-center justify-center text-white font-semibold text-xl'>
-        console
+        Input
       </header>
       <div className='w-full h-full'>
         <MonacoEditor
@@ -20,7 +25,6 @@ const Terminal = () => {
             fontFamily: "monospace",
             letterSpacing: 2,
             lineNumbers: "off",
-            readOnly: true,
             minimap: {
               enabled: false,
             },
@@ -32,11 +36,12 @@ const Terminal = () => {
             },
             wordWrap: "on",
           }}
-          value={file.result}
+          value={file.input}
+          onChange={handleChange}
         />
       </div>
     </div>
   )
 }
 
-export default Terminal
+export default Inputs

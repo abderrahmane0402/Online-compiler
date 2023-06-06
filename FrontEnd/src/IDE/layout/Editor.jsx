@@ -20,6 +20,7 @@ const Editor = ({}) => {
     try {
       const compile = await axios.post("http://localhost:5000/compile", {
         code: file.content,
+        input: file.input,
       })
       setFile((draft) => {
         draft.result = compile.data

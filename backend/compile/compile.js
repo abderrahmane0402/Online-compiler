@@ -1,7 +1,7 @@
 const { spawn } = require("child_process")
 const fs = require("fs")
 
-async function compile(code) {
+async function compile(code, input) {
   let result = null
   result = await new Promise((resolve, reject) => {
     fs.writeFile("./compile/program.c", code, (err) => {
@@ -14,13 +14,13 @@ async function compile(code) {
         "-o",
         "./compile/program",
       ])
+
       gcc.stderr.on("data", (data) => {
         error += data.toString()
       })
 
       gcc.on("close", () => {
         if (error != "") reject(error)
-        console.log(123)
         const program = spawn("./compile/program")
         program.stdout.on("data", (data) => {
           console.log(data)
@@ -30,6 +30,13 @@ async function compile(code) {
         program.on("close", () => {
           resolve(res)
         })
+
+        // inputs of the program
+        let ipt = input.split(" ")
+        for (let i = 0; i < ipt.length; i++) {
+          program.stdin.write(ipt[i] + "\n")
+        }
+        program.stdin.end()
       })
     })
   })
