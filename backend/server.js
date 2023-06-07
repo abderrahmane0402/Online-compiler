@@ -34,6 +34,10 @@ const profile = require("./getInfo/user")
 const { generateRandomCode } = require("./utils/CodeGenerator")
 app.use("/profile", profile)
 
+/* Admin */
+const admin = require("./Admin/index")
+app.use("/Admin", admin)
+
 /*************** Partage du code entre les utilisateurs *****************/
 
 io.on("connection", (socket) => {
