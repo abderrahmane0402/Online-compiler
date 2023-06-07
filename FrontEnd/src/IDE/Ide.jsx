@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react"
 import Header from "./layout/Header"
 // import Tools from "./components/Tools";
-import Layout from "./layout"
-import FileManager from "./layout/FileManager"
-import Main from "./layout/main"
 import { useNavigate } from "react-router-dom"
+import Layout from "./layout"
 import Editor from "./layout/Editor"
+import FileManager from "./layout/FileManager"
 import Terminal from "./layout/Terminal"
-import io from "socket.io-client"
-import Input from "../components/Input"
 import Inputs from "./layout/inputs"
+import Main from "./layout/main"
 
 export default function Ide() {
   const router = useNavigate()
   const [user, setUser] = useState(null)
+  const [files, setFiles] = useState([])
   useEffect(() => {
     setUser(sessionStorage.getItem("email"))
     if (!sessionStorage.getItem("email")) router("/", { replace: true })
@@ -22,8 +21,8 @@ export default function Ide() {
     <Layout>
       <Header />
       <Main>
-        {user != "essay" && <FileManager />}
-        <Editor />
+        {user != "essay" && <FileManager files={{ files, setFiles }} />}
+        <Editor files={{ files, setFiles }} />
         <div className='h-full flex flex-col gap-4'>
           <Terminal />
           <Inputs />

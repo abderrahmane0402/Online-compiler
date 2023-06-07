@@ -76,7 +76,6 @@ export default function Partage2() {
       setFile(data)
     })
     socket.on("code", (code) => {
-      console.log(code)
       setFile(code)
     })
   }, [])

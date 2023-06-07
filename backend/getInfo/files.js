@@ -36,7 +36,7 @@ router.delete("/:fileId", async (req, res) => {
 })
 router.put("/:fileId", async (req, res) => {
   const fileId = req.params.fileId
-  const { fileName , user } = req.body
+  const { fileName, user } = req.body
   try {
     //check if the file already exists by user
     const checkfile = await pool.query(
@@ -85,6 +85,20 @@ router.get("/search", async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).send("Internal server error")
+  }
+})
+
+router.post("/save", async (req, res) => {
+  const { fileName, content, user } = req.body
+  try {
+    await pool.query(
+      "UPDATE file SET content = $1 WHERE filename = $2 AND email = $3",
+      [content, fileName, user]
+    )
+    return res.sendStatus(200)
+  } catch (error) {
+    console.error(error)
+    return res.status(500).send("Internal server error")
   }
 })
 

@@ -54,10 +54,9 @@ const style = {
 const content =
   '#include<stdio.h>\n\nint main(){\n\tprintf("hello world");\n\treturn 0;\n}'
 
-const FileManager = () => {
+const FileManager = ({files}) => {
   const [fileName, setFileName] = useState("")
   const [open, setOpen] = useState(false)
-  const [files, setFiles] = useState([])
   const [toast, setToast] = useImmer({
     open: false,
     message: "",
@@ -115,7 +114,7 @@ const FileManager = () => {
     try {
       const user = sessionStorage.getItem("email")
       const response = await axios.post("http://localhost:5000/files", { user })
-      setFiles(response.data)
+      files.setFiles(response.data)
     } catch (error) {
       console.error(error)
     }
@@ -150,7 +149,7 @@ const FileManager = () => {
             </IconButton>
           </div>
           <div className='h-fit w-full flex flex-col items-center gap-2'>
-            {files.map((f) => (
+            {files.files.map((f) => (
               <File f={f} fetchFiles={fetchFiles} />
             ))}
           </div>

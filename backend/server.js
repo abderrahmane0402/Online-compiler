@@ -56,7 +56,6 @@ io.on("connection", (socket) => {
 
   socket.on("join-Group", (Group) => {
     if (socket.adapter.rooms.has(Group)) {
-      console.log("good")
       Pgroup = Group
       socket.join(Group)
       socket.broadcast

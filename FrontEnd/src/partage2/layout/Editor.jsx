@@ -18,7 +18,6 @@ const Editor = ({}) => {
         content: value,
         result: file.result,
       })
-      console.log("modifier")
     }
     setFile((draft) => {
       draft.content = value
