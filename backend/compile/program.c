@@ -1,6 +1,9 @@
 #include<stdio.h>
 
 int main(){
-	printf("hello world")
+    int a;
+    printf("hello world\n");
+    scanf("%d" , &a);
+    printf("a = %d" , a);
 	return 0;
 }

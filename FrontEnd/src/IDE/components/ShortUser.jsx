@@ -10,7 +10,7 @@ import {
   MenuItem,
   styled,
 } from "@mui/material"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { fileInfo } from "../../App"
 import { io } from "socket.io-client"
 
@@ -93,9 +93,11 @@ function ShortUser() {
       >
         {sessionStorage.getItem("email") != "essay" && (
           <>
-            <MenuItemStyled onClick={handleClose}>
-              <Avatar /> Profile
-            </MenuItemStyled>
+            <Link to={"/profile"}>
+              <MenuItemStyled onClick={handleClose}>
+                <Avatar /> Profile
+              </MenuItemStyled>
+            </Link>
             <MenuItemStyled
               onClick={() => {
                 joinGroup()

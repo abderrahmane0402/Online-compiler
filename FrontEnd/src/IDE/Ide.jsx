@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Header from "./layout/Header"
-// import Tools from "./components/Tools";
 import { useNavigate } from "react-router-dom"
 import Layout from "./layout"
 import Editor from "./layout/Editor"

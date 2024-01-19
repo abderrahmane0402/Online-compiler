@@ -1,0 +1,118 @@
+.styled-table {
+    border-collapse: collapse;
+    margin: auto;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    max-width: 1000px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    max-height: 800px;
+    height: 110px;
+}
+.styled-table thead tr {
+    /* background-color: rgb(137, 101, 144); */
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th ,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+.styled-table tbody tr:last-of-type {
+   background-color: #f3f3f3; 
+}
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid black;
+}
+.btn {
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+
+}
+.btn-edit {
+    background-color: #81a135;
+}
+
+.btn-delete {
+    background-color: #f44336;
+}
+.btn-view {
+    background-color:#3343e7;
+    color: white;
+}
+/* Home.css */
+
+.delete-modal {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .delete-modal p {
+    margin-bottom: 10px;
+  }
+  
+  .delete-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .btn-confirm-delete,
+  .btn-cancel-delete {
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-confirm-delete {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .btn-cancel-delete {
+    background-color: #3498db;
+    color: white;
+  }
+  /* .search-container {
+    display:flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  } */
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    width: 50%;
+
+  }
+  
+  .search-input {
+    padding: 3px;
+  }
+  
+  .search-button {
+    padding: 5px 10px;
+    color: black;
+    background-color: #5c5cfe;
+  }
+  
+  

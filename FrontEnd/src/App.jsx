@@ -9,6 +9,11 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { useImmer } from "use-immer"
 import Partage from "./partage1/partage"
 import Partage2 from "./partage2/partage2"
+import Admins from "./Admin/Admins"
+import Admin from "./Admin/Admin"
+import Ad from "./Admin/Ad"
+import AdmEd from "./Admin/AdmEd"
+import AdEdF from "./Admin/AdEdF"
 
 export const fileInfo = createContext()
 
@@ -35,6 +40,12 @@ const App = () => {
         {/* code share page */}
         <Route path='/partage' element={<Partage />} />
         <Route path='/partage2' element={<Partage2 />} />
+        {/* Admin */}
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/admin/view/:id' element={<Admins />} />
+        <Route path='/admin/add' element={<Ad />} />
+        <Route path='/admin/edit/:id' element={<AdmEd />} />
+        <Route path='/admin/view/:id/editF/:file_id' element={<AdEdF />} />
       </Routes>
     </fileInfo.Provider>
   )

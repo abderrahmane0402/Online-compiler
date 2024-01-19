@@ -31,7 +31,6 @@ export default function Partage() {
         <Editor />
         <Terminal />
       </Main>
-      <textarea></textarea>
     </Layout>
   )
 }

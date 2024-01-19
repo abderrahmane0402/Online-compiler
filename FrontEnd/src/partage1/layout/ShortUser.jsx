@@ -123,7 +123,11 @@ function ShortUser() {
           </ListItemIcon>
           Disconnect
         </MenuItemStyled>
-        <MenuItemStyled>
+        <MenuItemStyled
+          onClick={() => {
+            navigator.clipboard.writeText(code)
+          }}
+        >
           <ListItemIcon>
             <VpnKey fontSize='small' sx={{ color: "white" }} />
           </ListItemIcon>
